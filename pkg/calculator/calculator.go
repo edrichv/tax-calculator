@@ -44,8 +44,8 @@ func New(brackets []bracket) Calculator {
 	return &calculator{brackets: brackets}
 }
 
-func NewFromJson(jsonString string) Calculator {
-	content, err := os.ReadFile(jsonString)
+func NewFromJson(filePath string) Calculator {
+	content, err := os.ReadFile(filePath)
 	if err != nil {
 		panic("Unable to read file")
 	}
