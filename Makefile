@@ -2,4 +2,4 @@ export CGO_ENABLED := 0
 
 .PHONY: build
 build: 
-	go build ./cmd/taxcalc
+	go build -o bin/taxcalc ./cmd/taxcalc 
