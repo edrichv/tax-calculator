@@ -14,6 +14,7 @@ type Config struct {
 	salary       float64
 	inputFormat  string
 	outputFormat string
+	server       bool
 }
 
 const (
@@ -26,6 +27,7 @@ func flags() {
 	flag.Float64Var(&config.salary, "salary", 0, "The salary to calculate tax for")
 	flag.StringVar(&config.inputFormat, "inputFormat", "monthly", "The output format - One of [monthly, annually]")
 	flag.StringVar(&config.outputFormat, "outputFormat", "monthly", "The input format - One of [monthly, annually]")
+	flag.BoolVar(&config.server, "server", false, "Specify this field to run a server on localhost:8080")
 	flag.Parse()
 }
 
@@ -59,14 +61,30 @@ func formatOutput(output float64) string {
 	return fmt.Sprintf("R %.2f", output)
 }
 
+func runCli(calc calculator.Calculator) {
+	salary := formatInput(config.salary)
+	output := formatOutput(calc.Tax(salary))
+	fmt.Println(output)
+}
+
+func runServer(calc calculator.Calculator) {
+	srv := &server{
+		port: 8080,
+		calc: calc,
+	}
+	srv.Run()
+}
+
 func main() {
 	flags()
 	err := checkFlags()
 	if err != nil {
 		panic(err)
 	}
-	salary := formatInput(config.salary)
 	calc := calculator.NewFromJson(config.taxTablePath)
-	output := formatOutput(calc.Tax(salary))
-	fmt.Println(output)
+	if config.server {
+		runServer(calc)
+	} else {
+		runCli(calc)
+	}
 }
