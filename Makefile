@@ -5,7 +5,7 @@ build:
 	go build -o bin/taxcalc ./cmd/taxcalc 
 
 .PHONY: run-server
-run-server: 
+run-server: build
 	@chmod +x ./bin/taxcalc
 	./bin/taxcalc -server
 
