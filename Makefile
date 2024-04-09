@@ -8,3 +8,11 @@ build:
 run-server: 
 	@chmod +x ./bin/taxcalc
 	./bin/taxcalc -server
+
+.PHONY: gofmt
+gofmt: 
+	gofmt -s -w -l ./..
+
+.PHONY: clean
+clean:
+	git clean -xdf
