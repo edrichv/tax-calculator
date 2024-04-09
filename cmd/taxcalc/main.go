@@ -58,7 +58,7 @@ func formatOutput(output float64) string {
 	if config.outputFormat == monthly {
 		output /= 12.0
 	}
-	return fmt.Sprintf("R %.2f", output)
+	return calculator.FormatRands(output)
 }
 
 func runCli(calc calculator.Calculator) {
