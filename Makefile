@@ -16,3 +16,7 @@ gofmt:
 .PHONY: clean
 clean:
 	git clean -xdf
+
+.PHONY: test
+test:
+	go test -v ./...
